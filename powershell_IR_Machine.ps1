@@ -45,6 +45,21 @@ Get-ComputerInfo | Out-File -FilePath C:\StratNet_Triage\System_Info.txt
 #installed apps
 Get-CimInstance -ClassName Win32_Product | Export-Csv -Path C:\StratNet_Triage\Installed_Apps.csv
 
+#Windows defender actions, only if previously running
+Function DefenderScan
+{
+    Update-MpSignature
+    Start-MpScan -ScanType QuickScan
+}
+
+$defenderstatus = Get-Service Windefend | Select Status
+if ($defenderstatus -eq 'Running') {
+    DefenderScan
+}
+else {
+    continue
+}
+
 #eventlog
 New-Item -Path "c:\StratNet_Triage" -Name "Event_Logs" -ItemType "directory"
 $now = Get-Date
@@ -52,6 +67,7 @@ Get-EventLog -LogName System -Before $now | Export-Csv -Path C:\StratNet_Triage\
 Get-EventLog -LogName Application -Before $now | Export-Csv -Path C:\StratNet_Triage\Event_Logs\EventLog_Application.csv
 Get-EventLog -LogName Security -Before $now | Export-Csv -Path C:\StratNet_Triage\Event_Logs\EventLog_Security.csv
 Get-WinEvent -Logname Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational | Export-Csv -Path C:\StratNet_Triage\Event_Logs\RDP_logs.csv
+Get-WinEvent 'Microsoft-Windows-Windows Defender/Operational' | Export-Csv -Path C:\StratNet_Triage\Event_Logs\WinDefender.csv
 
 #memory dump 
 New-Item -Path "c:\StratNet_Triage" -Name "Memory_Dumps" -ItemType "directory"

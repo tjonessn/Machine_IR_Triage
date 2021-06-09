@@ -3,7 +3,7 @@ This script collects a series of diagnostic and other information useful for tri
 Script must be run from C directory in order for the memory capture to work
 Move the folder "Machine_IR_Triage_Domain_Controller" to C:\
 
-The memory capture uses a 3rd part tool called "comae" to take the memory dump.  Specifically it uses the dumpit.exe function.
+The memory capture uses a 3rd party tool called "comae" to take the memory dump.  Specifically it uses the dumpit.exe function.
 This tool is open source and can be found here: https://www.comae.com/
 
 All logs are exported to C:\StratNet_Triage

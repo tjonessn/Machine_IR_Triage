@@ -52,6 +52,9 @@ Copy-Item -Path "C:\Windows\System32\winevt\Logs\" -Destination C:\StratNet_Tria
 New-Item -Path "c:\StratNet_Triage" -Name "srum_dump" -ItemType "directory"
 Copy-Item -Path "C:\Windows\System32\sru\" -Destination C:\StratNet_Triage\srum_dump -Recurse
 
+#get raw shim cache for analysis with https://github.com/mandiant/ShimCacheParser or other tool
+reg export "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\AppCompatCache" C:\StratNet_Triage\shimcache.reg
+
 #memory dump 
 New-Item -Path "c:\StratNet_Triage" -Name "Memory_Dumps" -ItemType "directory"
 

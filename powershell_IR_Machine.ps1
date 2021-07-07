@@ -26,7 +26,7 @@ foreach ($group in $groups)
 #networks, open ports, and adapter info
 New-Item -Path "c:\StratNet_Triage" -Name "Network_Info" -ItemType "directory"
 Get-NetIPConfiguration -All | Out-File -FilePath C:\StratNet_Triage\Network_Info\IP_Config.txt
-netstat -naob| Export-Csv -Path C:\StratNet_Triage\Network_Info\NetStat_info.txt
+Get-NetTCPConnection | Export-Csv C:\Stratnet_Triage\Network_Info\netstat.csv
 Get-NetRoute | Out-File -FilePath C:\StratNet_Triage\Network_Info\Route_Info.txt
 netsh wlan show profiles | Out-File -FilePath C:\StratNet_Triage\Network_Info\wifi_networks.txt
 arp -a | Out-File -FilePath C:\StratNet_Triage\Network_Info\ARP_Info.txt
